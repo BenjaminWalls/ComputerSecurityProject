@@ -8,7 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
-
+    <script type="text/javascript" src="text.json"></script>
+    <script type="text/javascript" src="javascript.js"></script>
     <style>
 
         #messaging {
@@ -48,12 +49,16 @@
                     inputValue = document.getElementById("password").value;
                     userN = document.getElementById("username").value;
                     //document.getElementById("output").innerHTML = md5(inputValue);
-                    let hashedPassword = "e1915694741f60319068e3e6d98ec478";  //The password for Bob and Alice is 'computersecurity123'
-                    if(md5(inputValue)==hashedPassword) {
+                    let hashedPassword = "e1915694741f60319068e3e6d98ec478";  
+                    //The password for Bob and Alice is 'computersecurity123'
+                    if(md5(inputValue)==hashedPassword) {        
                         getNextScreen();
                     }
+                    if (userN.toLowerCase() == "papyrus")
+                    document.getElementById("output").innerHTML = "THE GREAT PAPYRUS IS HONORED! BUT HUMAN YOU HAVE YOU ALREADY HAVE YOU'RE OWN GREAT NAME!";
+
                     else {
-                        document.getElementById("output").innerHTML = "Try again.";
+                        document.getElementById("output").innerHTML = "Try Again.";
                     }
                 }
 
@@ -71,7 +76,6 @@
             });
     
             socket.on('message', function(data) {
-                    
                 $('#messages').append($('<p>').text(data));
             });
     
