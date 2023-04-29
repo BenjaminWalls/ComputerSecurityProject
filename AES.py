@@ -11,7 +11,7 @@ def encryption(data):
     ct_bytes = cipher.encrypt(data)
     iv = b64encode(cipher.iv).decode('utf-8')
     ct = b64encode(ct_bytes).decode('utf-8')
-    with open('data.json', 'w') as file:
+    with open('text.json', 'w') as file:
         json.dump({'iv':iv, 'ciphertext':ct}, file)
     result = json.dumps({'iv':iv, 'ciphertext':ct})
 

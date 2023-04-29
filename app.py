@@ -11,8 +11,8 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 @socketio.on('message')
 def handle_message(message):
     print("Received message: " + message)
+    encryption(b'hi')
     if message != "User connected!":
-        encryption(message)
         send(message, broadcast=True)
 
 @app.route('/')
