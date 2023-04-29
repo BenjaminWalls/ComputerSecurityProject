@@ -7,39 +7,83 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+
+    <style>
+
+        #messaging {
+            display: none;
+        }
+
+    </style>
+      
 </head>
 <body style="text-align:center; font-family: Arial, serif; font-size: 14pt">
 
+    <div id="messages" style="margin: 0 auto; width: 60%; text-align: left; min-height: 300px">
+    </div>
+
+    <div id="login">
+
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="text" id="password" placeholder="Please enter the password" required>
+        <button id="enterBtn" onclick="getInputValue()">Enter</button>
+        <p id="output"></p>
+
+    </div>
+
+        <div id="messaging">
+
+            <input type="text" id="message" placeholder="Message" required>
+            <button id="sendBtn">Send</button>
+
+        </div>
+
     <script type="text/javascript">
 
+                let inputValue;
+                let userN;
+                var log = document.getElementById("login");
+                function getInputValue() {
+                    inputValue = document.getElementById("password").value;
+                    userN = document.getElementById("username").value;
+                    //document.getElementById("output").innerHTML = md5(inputValue);
+                    let hashedPassword = "e1915694741f60319068e3e6d98ec478";  //The password for Bob and Alice is 'computersecurity123'
+                    if(md5(inputValue)==hashedPassword) {
+                        getNextScreen();
+                    }
+                    else {
+                        document.getElementById("output").innerHTML = "Try again.";
+                    }
+                }
+
+                function getNextScreen() {
+                    $("#messaging").show(1500);
+                    log.remove();
+                }
+
+                $("#enterBtn").click
+        
         $(document).ready(function() {
             var socket = io.connect("http://localhost:5000")
             socket.on('connect', function() {
                 socket.send("User connected!");
             });
-
+    
             socket.on('message', function(data) {
+                    
                 $('#messages').append($('<p>').text(data));
             });
-
+    
             $('#sendBtn').on('click', function () {
-                
-                socket.send($('#username').val() + ': ' + $('#message').val());
+                socket.send(userN + ': ' + $('#message').val());
                 $('#message').val('');
-
+    
             });
-
+    
         })
-
-    </script>
-
-    <div id="messages" style="margin: 0 auto; width: 60%; text-align: left; min-height: 300px">
-
-    </div>
-
-    <input type="text" id="username" placeholder="Username" required>
-    <input type="text" id="message" placeholder="Message" required>
-    <button id="sendBtn">Send</button>
+    
+        </script>
 
 </body>
 </html>
