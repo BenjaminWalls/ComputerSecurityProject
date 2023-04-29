@@ -3,7 +3,7 @@ from base64 import b64encode, b64decode
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 
-result = ""
+
 
 def encryption(data):
     key = get_random_bytes(16)
@@ -15,15 +15,10 @@ def encryption(data):
         json.dump({'iv':iv, 'ciphertext':ct}, file)
     result = json.dumps({'iv':iv, 'ciphertext':ct})
 
-
-def decryption():
-    try:
-        b64 = json.loads(result)
-        iv = b64decode(b64['iv'])
-        ct = b64decode(b64['ciphertext'])
-        cipher = AES.new(key, AES.MODE_CFB, iv=iv)
-        pt = cipher.decrypt(ct)
-        #print("The message was: ", pt)
-        return pt
-    except (ValueError, KeyError):
-       return "Decryption Error"
+    b64 = json.loads(result)
+    iv = b64decode(b64['iv'])
+    ct = b64decode(b64['ciphertext'])
+    cipher = AES.new(key, AES.MODE_CFB, iv=iv)
+    pt = cipher.decrypt(ct)   
+    return pt.decode()
+    

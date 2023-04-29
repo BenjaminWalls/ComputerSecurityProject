@@ -71,6 +71,7 @@
             socket.on('connect', function() {
                 socket.send("User connected!");
             });
+            
             socket.on('message', function(data) {
                 $('#messages').append($('<p>').text(data));
             });
