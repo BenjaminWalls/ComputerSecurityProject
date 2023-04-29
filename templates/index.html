@@ -54,9 +54,6 @@
                     if(md5(inputValue)==hashedPassword) {        
                         getNextScreen();
                     }
-                    if (userN.toLowerCase() == "papyrus")
-                    document.getElementById("output").innerHTML = "THE GREAT PAPYRUS IS HONORED! BUT HUMAN YOU HAVE YOU ALREADY HAVE YOU'RE OWN GREAT NAME!";
-
                     else {
                         document.getElementById("output").innerHTML = "Try Again.";
                     }
@@ -74,7 +71,6 @@
             socket.on('connect', function() {
                 socket.send("User connected!");
             });
-    
             socket.on('message', function(data) {
                 $('#messages').append($('<p>').text(data));
             });
