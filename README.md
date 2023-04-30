@@ -18,8 +18,8 @@ None
 
 ### References
 
-https://pycryptodome.readthedocs.io/en/latest/src/cipher/classic.html#cfb-mode
-https://cdnjs.com/libraries/socket.io
-https://cdnjs.com/libraries/jquery
-https://cdnjs.com/libraries/blueimp-md5
+- https://pycryptodome.readthedocs.io/en/latest/src/cipher/classic.html#cfb-mode
+- https://cdnjs.com/libraries/socket.io
+- https://cdnjs.com/libraries/jquery
+- https://cdnjs.com/libraries/blueimp-md5
 
