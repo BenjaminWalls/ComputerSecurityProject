@@ -4,8 +4,7 @@ from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 
 
-
-def encryption(data):
+def aes(data):
     key = get_random_bytes(16)
     cipher = AES.new(key, AES.MODE_CFB)
     ct_bytes = cipher.encrypt(data)
@@ -19,6 +18,15 @@ def encryption(data):
     iv = b64decode(b64['iv'])
     ct = b64decode(b64['ciphertext'])
     cipher = AES.new(key, AES.MODE_CFB, iv=iv)
-    pt = cipher.decrypt(ct)   
-    return pt.decode()
+    pt = cipher.decrypt(ct)
+    with open('text.json', 'w') as file:
+        json.dump({'plaintext':pt}, file)  
+
+    with open('text.json', 'r') as myfile:
+        text=myfile.read()
+    obj = json.loads(text)
+
+
+    mess = pt.decode() + " " + str(obj['ciphertext'])
+    return mess
     

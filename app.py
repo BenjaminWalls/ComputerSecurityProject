@@ -18,6 +18,9 @@ def handle_message(message):
     
     
     key = get_random_bytes(16)
+    # change key to be the message padded?
+
+
     cipher = AES.new(key, AES.MODE_CFB)
     ct_bytes = cipher.encrypt(data)
     iv = b64encode(cipher.iv).decode('utf-8')
@@ -26,17 +29,16 @@ def handle_message(message):
         json.dump({'iv':iv, 'ciphertext':ct}, file)
     result = json.dumps({'iv':iv, 'ciphertext':ct})
 
-    b64 = json.loads(result)
+    
+    with open('text.json', 'r') as myfile:
+        text=myfile.read()
+    b64 = json.loads(text)
     iv = b64decode(b64['iv'])
     ct = b64decode(b64['ciphertext'])
     cipher = AES.new(key, AES.MODE_CFB, iv=iv)
     pt = cipher.decrypt(ct)
 
-    with open('text.json', 'r') as myfile:
-        text=myfile.read()
-    obj = json.loads(text)
-
-    mess = pt.decode() + " " + str(obj['ciphertext'])
+    mess = pt.decode() + " " + str(b64['ciphertext'])
 
     if message != "User connected!":
         send(mess, broadcast=True)
@@ -47,3 +49,5 @@ def index():
 
 if __name__ == "__main__":
     socketio.run(app, host="localhost")
+
+
