@@ -24,6 +24,164 @@
 
         #messaging {
             display: none;
+            margin-top: 6%;
+        }
+
+        #enterstuff {
+
+            margin: 0 auto;
+            width: 156px;
+            height: 36px;
+
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 800;
+            font-size: 12px;
+            line-height: 14px;
+            text-align: center;
+
+            color: #1E1E1E;
+
+        }
+
+        #username {
+            box-sizing: border-box;
+            width: 131px;
+            height: 37px;
+
+            background: #DEC9B6;
+            border: 1px solid #5F1F1F;
+
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 14px;
+
+            color: #5F1F1F;
+        }
+        #password { 
+            box-sizing: border-box;
+
+            
+            width: 131px;
+            height: 37px;
+
+            background: #DEC9B6;
+            border: 1px solid #5F1F1F;
+
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 14px;
+
+            color: #5F1F1F;
+        }
+        #enterBtn {
+            
+            box-sizing: border-box;
+            width: 47px;
+            height: 21px;
+            background: #5F1F1F;
+            border: 1px solid #353232;
+
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 14px;
+            color: #FFFFFF;
+        }
+        #enterBtn:hover {background-color: #990000}
+        #enterBtn:active {
+            background-color: #640b0b;
+            transform: translateY(3px);
+        }
+        
+        .footer{
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: #353232;
+
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 12px;
+            color: #FFFFFF;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            display: none;
+        }
+ 
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #5F2525;
+            border-radius: 6px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c62020; 
+        }
+        ::-webkit-scrollbar-thumb:active {
+            background: #f15757; 
+        }
+        .message_box {
+            display: block;
+            margin-top: auto;
+            margin-left: auto;
+            margin-right: auto;
+            height: 500px;
+            width: 500px;
+            overflow:auto;
+            
+            background: #DEC9B6;
+            border: 2px solid #5F1F1F;
+            border-radius: 6px;
+
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 12px;
+            /* identical to box height */
+            color: #5F1F1F;
+
+        }
+        #message{
+            box-sizing: border-box;
+
+            width: 500px;
+            height: 36px;
+
+            background: #DEC9B6;
+            border: 2px solid #5F1F1F;
+            border-radius: 0px 0px 6px 6px;
+
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 12px;
+            /* identical to box height */
+
+
+            color: #81766D;
         }
 
     </style>
@@ -36,26 +194,32 @@
 
     <div id="login">
 
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="text" id="password" placeholder="Please enter the password" required>
+        <p id="enterstuff">Please enter your name and shared password</p>
+        <input type="text" id="username" placeholder="Enter name..." required>
+        <input type="text" id="password" placeholder="Enter password..." required>
         <button id="enterBtn" onclick="getInputValue()">Enter</button>
-        <p id="output"></p>
+        <p id="output" style="font-family: Raleway;"></p>
 
     </div>
         
         <!--messages div-->
+ 
         <div id="messaging">
-
-            <input type="text" id="message" placeholder="Message" required>
-            <button id="sendBtn">Send</button>
+            <div class="message_box">
+            </div>  
+            <input type="text" id="message" placeholder="Type your message here..." required>
 
         </div>
+
+        <div class="footer"><p>Made with &#9829 by Rachelle Phipps and Ben Walls</p></div>
+        
 
     <script type="text/javascript">
 
                 let inputValue;
                 let userN;
                 var log = document.getElementById("login");
+                var pad = document.getElementById("messages");
                 function getInputValue() {
                     inputValue = document.getElementById("password").value;
                     userN = document.getElementById("username").value;
@@ -73,6 +237,7 @@
                 function getNextScreen() {
                     $("#messaging").show(1500);
                     log.remove();
+                    pad.remove();
                 }
 
                 $("#enterBtn").click
@@ -84,14 +249,24 @@
             });
             
             socket.on('message', function(data) {
-                $('#messages').append($('<p>').text(data));
+                $('.message_box').append($('<p>').text(data));
             });
     
-            $('#sendBtn').on('click', function () {
+            let minput = document.getElementById("message");
+            minput.addEventListener("keypress", (e) => {    
+                
+                if(e.which == 13 && $('#message').val() != '') {
+
+                    socket.send(userN + ': ' + $('#message').val());
+                    $('#message').val('');
+                }
+            })
+
+            /*$('#sendBtn').on('click', function () {
                 socket.send(userN + ': ' + $('#message').val());
                 $('#message').val('');
     
-            });
+            });*/
     
         })
     
