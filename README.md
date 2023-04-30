@@ -1,25 +1,16 @@
 # Computer Security Final Project
-## Created by Rachelle Phipps and Benjamin Walls
-### How to run the program
+## Rachelle Phipps and Ben Walls
 
-Run the command.ps1 file to install the necessary dependencies and run the application. The URL will be displayed in the terminal.
-After navigating to the URL, type in your username and the password "computersecurity123" to enter the chatroom. Here, you can
-send and receive messages to each other on the same URL if connected to the same Wi-Fi network.
+### How to run the application
 
-### Features
 
-- Sending and receiving messages to other users in the chatroom.
-- Encryption and decryption of messages using AES-CFB.
-- Password authentication using MD5 Hash Function.
+### The Program
+Our application is built in Python, HTML, Javascript, and CSS in order to run the backend and frontend. The backend consists of application.py that routes the pages and messages using flask/flask-socketio while AES.py handles the encryption/decryption of the message. The frontend consists of login.html and message.html for each our of pages. 
 
-### Bugs
+When using the program, you will be prompts on the home screen to enter your name for chatting and shared password with another user. After entering your information, the page will be routed to the messaging page where you are able to type a message that will be sent to everyone on the page. 
 
-None
+If another user wants to join the room, they must enter their name and the shared password in order to enter. 
 
-### References
 
-- https://pycryptodome.readthedocs.io/en/latest/src/cipher/classic.html#cfb-mode
-- https://cdnjs.com/libraries/socket.io
-- https://cdnjs.com/libraries/jquery
-- https://cdnjs.com/libraries/blueimp-md5
-
+### Our choosen cipher 
+We decided to choose AES CTR with a 256 bit key length to improve security. 
