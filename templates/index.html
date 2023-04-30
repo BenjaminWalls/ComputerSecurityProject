@@ -224,7 +224,7 @@
                     inputValue = document.getElementById("password").value;
                     userN = document.getElementById("username").value;
                     //document.getElementById("output").innerHTML = md5(inputValue);
-                    let hashedPassword = "e1915694741f60319068e3e6d98ec478";  
+                    let hashedPassword = md5("computersecurity123");  
                     //The password for Bob and Alice is 'computersecurity123'
                     if(md5(inputValue)==hashedPassword) {        
                         getNextScreen();
